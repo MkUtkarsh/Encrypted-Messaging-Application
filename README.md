@@ -14,13 +14,13 @@ The below functionalities are designed using following commands:
 11. Message can be any type, for example, text, images, video, and audio.
 
 ##### LIST OF COMMANDS:
-- Send a message to User: SEND <USERNAME> <MESSAGE>
-- Send a multimedia to User: SEND FILE <USERNAME> <MESSAGE>
-- Send a message to Group: SEND <GROUPNAME> <MESSAGE>
-- Send a multimedia to Group: SEND FILE <GROUPNAME> <MESSAGE>
-- Create Group: CREATE <GROUPNAME>
-- Join Group: JOIN <GROUPNAME>
-- Prints list of all the Group: LIST
+- Send a message to User: SEND USERNAME MESSAGE
+- Send a multimedia to User: SEND FILE USERNAME MESSAGE
+- Send a message to Group: SEND GROUPNAME MESSAGE
+- Send a multimedia to Group: SEND FILE GROUPNAME MESSAGE
+- Create Group: CREATE GROUPNAME
+- Join Group: JOIN GROUPNAME
+- Prints list of all the Group: LIST GROUPS
 
 ##### INSTRUCTIONS TO RUN THE CODE:
 - python3 server.py
