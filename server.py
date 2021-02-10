@@ -7,6 +7,14 @@ def pad(msg):
         msg += ' '
     return msg 
 
+def unique(list1): 
+      
+    # insert the list to the set 
+    list_set = set(list1) 
+    # convert the set to the list 
+    unique_list = (list(list_set)) 
+    return unique_list
+
 Group_lists=[] #key as grp name and value and name of all group members
 Username_and_Port = {}
 class User:
@@ -65,30 +73,24 @@ def rcv(client,username):
 
             elif(command=="group"): #msg=groupname file filename # command=group
                 if "file" in msg:
-                    
+                    port = []
                     grpname,txt,filename=msg.split(maxsplit=2)
-                    
-                    filecontent=None
-                    newfilename= "new_"+filename
-                    filesize = int(client.recv(1024).decode())
-                    
-                    aa=client.recv(filesize)
-                    print(filesize,aa)
-                    with open(newfilename,"wb") as F:
-                        F.write(aa)
-                        
-
-                    i=0
-                    #groupname = msg.split(maxsplit=1)[0] 
-                    for i in range(len(Group_lists)):
-                        if(Group_lists[i].group_name==grpname):
-                            if username in Group_lists[i].members:
-                                send1("group",username,grpname,filecontent,True,newfilename) 
-                                #client.send("Message sent without encryption".encode())
-                                print("***********Message sent****************")
-                            else:
-                                #client.send("You are not part of the group".encode())
-                                pass    
+                    #
+                    grpname = grpname.split(",")
+                    for grp in grpname:
+                        for i in range(len(Group_lists)):
+                            if(Group_lists[i].group_name==grp):
+                                for each in Group_lists[i].members:
+                                    # port += str(Username_and_Port[each]) + " "
+                                    port.append(Username_and_Port[each])
+                    port = unique(port)
+                    ports = ""
+                    for each in port:
+                        ports += str(each) + " "
+                    ports = pad(ports)
+                    client.send(bytes(ports,'utf-8'))
+                    #
+                       
                 else:    
                     i=0
                     groupname=msg.split(maxsplit=1)[0]
@@ -254,7 +256,7 @@ Users = []
 
 Username_and_Passwords = {}
 
-PORT = 5500
+PORT = 5501
 server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 server.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
 ADDR = (socket.gethostname(),PORT)
